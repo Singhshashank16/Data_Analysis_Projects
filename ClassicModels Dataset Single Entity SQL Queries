@@ -1,0 +1,135 @@
+Queries of Single Entity
+
+QUE1. Prepare a list of offices sorted by country, state, city.
+
+SELECT *
+FROM classicmodels.offices
+ORDER BY country, state, city;
+
+
+
+QUE2. How many employees are there in the company?
+
+SELECT COUNT(EMPLOYEENUMBER)
+         FROM EMPLOYEES;
+
+
+
+Que.3 What is the total of payments received?
+
+SELECT SUM(AMOUNT) AS Total_Payments_Recieved                  
+FROM PAYMENTS;	
+
+
+
+Que4. List the product lines that contain 'Cars'.
+
+SELECT DISTINCT PRODUCTLINE
+FROM PRODUCTS
+WHERE PRODUCTLINE LIKE '%Cars%'
+
+
+
+Que5. Report total payments for October 28, 2004.
+
+SELECT SUM(amount) AS Total_Payments_for_28_Oct_2004
+FROM payments
+WHERE PAYMENTDATE = "2004-10-28";
+
+
+
+Que6. Report those payments greater than $100,000.
+
+SELECT *
+FROM PAYMENTS
+WHERE AMOUNT>100000;
+
+
+
+
+Que7. List the products in each product line.
+
+SELECT PRODUCTNAME, PRODUCTLINE
+FROM PRODUCTS;
+
+
+
+
+Que8. How many products in each product line?
+
+SELECT PRODUCTLINE, COUNT(PRODUCTLINE) AS PRODUCT_COUNT
+FROM PRODUCTS
+GROUP BY PRODUCTLINE
+ORDER BY PRODUCTLINE;
+
+
+
+
+Que9. What is the minimum payment received?
+
+SELECT MIN(AMOUNT) AS LOWEST_PAYMENT
+FROM PAYMENTS;
+
+
+
+
+
+Que10. List all payments greater than twice the average payment.
+
+SELECT AMOUNT
+FROM PAYMENTS
+WHERE AMOUNT > 2*(SELECT AVG(AMOUNT) FROM PAYMENTS);
+
+
+
+
+
+Que11. What is the average percentage markup of the MSRP on buyPrice?
+
+SELECT AVG((MSRP - BUYPRICE)*100/BUYPRICE) AS MARKUP_PERCENTAGE
+FROM PRODUCTS
+
+
+
+
+
+Que12. How many distinct products does ClassicModels sell?
+
+SELECT COUNT(DISTINCT PRODUCTNAME) AS DISTINCT_PRODUCTS
+FROM PRODUCTS
+
+
+
+
+
+Que13. Report the name and city of customers who don't have sales representatives?
+
+SELECT CUSTOMERNAME, CITY
+FROM CUSTOMERS
+WHERE SALESREPEMPLOYEENUMBER IS NULL;
+
+
+
+
+
+Que 14. What are the names of executives with VP or Manager in their title? Use the CONCAT function to combine the employee's first name and last name into a single field for reporting.
+
+SELECT CONCAT(FIRSTNAME, CONCAT(' ', LASTNAME)) AS FULLNAME
+FROM EMPLOYEES
+WHERE JOBTITLE LIKE '%VP%' OR JOBTITLE LIKE '%Manager%';
+
+
+
+
+
+
+Que 15. Which orders have a value greater than $5,000?
+
+SELECT ORDERNUMBER, SUM(PRICEEACH*QUANTITYORDERED) AS TOTAL
+FROM ORDERDETAILS
+WHERE (SELECT SUM(PRICEEACH*QUANTITYORDERED) FROM ORDERDETAILS)>5000
+GROUP BY ORDERNUMBER
+ORDER BY ORDERNUMBER;
+
+
+
